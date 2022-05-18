@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
+import { useAutoKana } from "./useAutokana";
 
 const kanaExtractionPattern = /[^ 　ぁあ-んー]/g;
 const isHiragana = (str: string) => str.match(/^[ぁ-んー　]*$/);
@@ -46,6 +47,8 @@ function App() {
     setCurWord("");
   };
 
+  const { onChange } = useAutoKana(() => kana, setKana);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -54,12 +57,7 @@ function App() {
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
 
-        <input
-          onChange={handleOnchange}
-          onCompositionStart={handleOnCompositionStart}
-          onCompositionUpdate={handleOnCompositionUpdate}
-          onCompositionEnd={handleOnCompositionEnd}
-        />
+        <input onChange={onChange} />
         <input
           onChange={(e) => {
             console.log(e);
